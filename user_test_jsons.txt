@@ -1,0 +1,11 @@
+Users
+
+http://127.0.0.1:5000/users POST
+{
+    "username": "Aarav"
+}
+
+
+http://127.0.0.1:5000/users/14e03465-eae9-4681-ac2d-7aef18f78901
+
+http://127.0.0.1:5000/users

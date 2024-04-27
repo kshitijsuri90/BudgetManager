@@ -1,0 +1,12 @@
+http://127.0.0.1:5000/budget
+POST
+
+{
+    "users": [
+        "14e03465-eae9-4681-ac2d-7aef18f78901",
+        "705cf5b9-1e8c-4675-8d22-b6e70137102d"
+    ],
+    "amount": "400",
+    "validity": "2024-04-30 12:30:45",
+    "category": "FOOD"
+}
