@@ -5,6 +5,7 @@ from datetime import datetime
 
 from transactions.Transaction import Transaction
 from category.Category import is_category_member, CATEGORY
+from users.UserManager import UserManager
 
 class TransactionManager:
     _instance = None
@@ -76,11 +77,11 @@ class TransactionManager:
         conn.close()
         return json.loads(json_data)
 
-    def get_transactions_by_user_with_time(self, user, timestamp):
+    def get_transactions_by_user_with_time_category(self, user, timestamp, category):
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
         print('User:', user)
-        cursor.execute('''SELECT * FROM transactions WHERE USER = ? AND TIMESTAMP > ?''', (user, timestamp))
+        cursor.execute('''SELECT * FROM transactions WHERE USER = ? AND TIMESTAMP >= ? AND CATEGORY = ?''', (user, timestamp, category))
         user_transactions = cursor.fetchall()
         conn.close()
         all_transactions = [self.get_transaction_entity_from_db(transaction) for transaction in user_transactions]
@@ -111,7 +112,11 @@ class TransactionManager:
     def process_transactions(self, data):
         try:
             user = data.get('user')
+            _, all_present = UserManager.get_instance().check_user_existence([user])
+            if not all_present:
+                raise Exception("User list is invalid")
             transactions = data.get('transactions')
+            print('Transactions:', transactions)
             for transaction_data in transactions:
                 transaction_id = transaction_data.get('transaction_id')
                 category = transaction_data.get('category')
@@ -124,8 +129,8 @@ class TransactionManager:
                 timestamp = transaction_data.get('timestamp')
                 # Convert string to datetime object
                 time_obj = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
-
                 transaction = Transaction(user, category, amount, currency, timestamp)
+                print(transaction)
                 self.add_transaction(transaction)
                 
             print("Transactions processed successfully")

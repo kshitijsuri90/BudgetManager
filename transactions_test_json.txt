@@ -1,18 +1,18 @@
 transactions
 http://127.0.0.1:5000/transactions POST
 {
-    "user": "705cf5b9-1e8c-4675-8d22-b6e70137102d",
+    "user": "16f074f4-8c7a-4674-8bda-5042342f816b",
     "transactions": [
         {
             "transaction_id": "1",
             "category": "FOOD",
-            "amount": "100",
+            "amount": "600",
             "timestamp": "2024-04-30 12:30:45"
         },
         {
             "transaction_id": "2",
             "category": "SHOPPING",
-            "amount": "200",
+            "amount": "50",
             "timestamp": "2024-04-30 12:31:45"
         }
     ]
